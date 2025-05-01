@@ -1,5 +1,6 @@
 use std::collections::HashMap;
 use crate::spec::common::{Either, ExternalDocumentation, RefOr, Tag};
+use asyncapi::MessageBinding;
 
 pub type Messages = HashMap<String, RefOr<Message>>;
 
@@ -39,7 +40,7 @@ pub struct Message {
     pub external_docs: Option<RefOr<ExternalDocumentation>>,
     /// A map where the keys describe the name of the protocol and the values describe protocol-specific definitions for the message.
     #[serde(default, skip_serializing_if = "Option::is_none")]
-    pub bindings: Option<RefOr<MessageBindings>>,
+    pub bindings: Option<RefOr<MessageBinding>>,
     /// List of examples.
     #[serde(default)]
     pub examples: Vec<MessageExample>,
@@ -68,12 +69,6 @@ pub struct CorrelationId {
     pub description: Option<String>,
     /// A runtime expression that specifies the location of the correlation ID.
     pub location: String,
-}
-
-#[derive(serde::Serialize, serde::Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct MessageBindings {
- // TODO: implement based on https://www.asyncapi.com/docs/reference/specification/v3.0.0#messageBindingsObject
 }
 
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -128,7 +123,7 @@ pub struct MessageTrait {
     pub external_docs: Option<RefOr<ExternalDocumentation>>,
     /// A map where the keys describe the name of the protocol and the values describe protocol-specific definitions for the message.
     #[serde(default, skip_serializing_if = "Option::is_none")]
-    pub bindings: Option<RefOr<MessageBindings>>,
+    pub bindings: Option<RefOr<MessageBinding>>,
     /// List of examples.
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub examples: Vec<MessageExample>,

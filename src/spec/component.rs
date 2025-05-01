@@ -1,10 +1,11 @@
 use std::collections::HashMap;
-use crate::spec::channel::{Channel, ChannelBindings, Parameter};
+use crate::spec::channel::{Channel, Parameter};
 use crate::spec::common::{Either, ExternalDocumentation, RefOr, Tag};
-use crate::spec::message::{CorrelationId, Message, MessageBindings, MessageTrait, MultiFormatSchema};
-use crate::spec::operation::{Operation, OperationBindings, OperationReply, OperationReplyAddress, OperationTrait};
+use crate::spec::message::{CorrelationId, Message, MessageTrait, MultiFormatSchema};
+use crate::spec::operation::{Operation, OperationReply, OperationReplyAddress, OperationTrait};
 use crate::spec::security::SecurityScheme;
-use crate::spec::server::{Server, ServerBindings, Variable};
+use crate::spec::server::{Server, Variable};
+use asyncapi::{ChannelBinding, OperationBinding, MessageBinding, ServerBinding};
 
 #[derive(serde::Serialize, serde::Deserialize, Default)]
 #[serde(rename_all = "camelCase")]
@@ -57,14 +58,14 @@ pub struct Components {
     pub message_traits: HashMap<String, RefOr<MessageTrait>>,
     /// An object to hold reusable [Server Bindings Objects](ServerBindings).
     #[serde(default, skip_serializing_if = "HashMap::is_empty")]
-    pub server_bindings: HashMap<String, RefOr<ServerBindings>>,
+    pub server_bindings: HashMap<String, RefOr<ServerBinding>>,
     /// An object to hold reusable [Channel Bindings Objects](ChannelBindings).
     #[serde(default, skip_serializing_if = "HashMap::is_empty")]
-    pub channel_bindings: HashMap<String, RefOr<ChannelBindings>>,
+    pub channel_bindings: HashMap<String, RefOr<ChannelBinding>>,
     /// An object to hold reusable [Operation Bindings Objects](OperationBindings).
     #[serde(default, skip_serializing_if = "HashMap::is_empty")]
-    pub operation_bindings: HashMap<String, RefOr<OperationBindings>>,
+    pub operation_bindings: HashMap<String, RefOr<OperationBinding>>,
     /// An object to hold reusable [Message Bindings Objects](MessageBindings).
     #[serde(default, skip_serializing_if = "HashMap::is_empty")]
-    pub message_bindings: HashMap<String, RefOr<MessageBindings>>,
+    pub message_bindings: HashMap<String, RefOr<MessageBinding>>,
 }

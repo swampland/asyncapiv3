@@ -1,6 +1,7 @@
 use std::collections::HashMap;
 use crate::spec::common::{ExternalDocumentation, ReferenceObject, RefOr, Tag};
 use crate::spec::security::SecurityScheme;
+use asyncapi::OperationBinding;
 
 pub type Operations = HashMap<String, RefOr<Operation>>;
 
@@ -32,7 +33,7 @@ pub struct Operation {
     pub external_docs: Option<RefOr<ExternalDocumentation>>,
     /// A map where the keys describe the name of the protocol and the values describe protocol-specific definitions for the operation.
     #[serde(default, skip_serializing_if = "Option::is_none")]
-    pub bindings: Option<RefOr<OperationBindings>>,
+    pub bindings: Option<RefOr<OperationBinding>>,
     /// A list of traits to apply to the operation object. Traits MUST be merged using traits merge mechanism. The resulting object MUST be a valid Operation Object.
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub traits: Vec<RefOr<OperationTrait>>,
@@ -47,12 +48,6 @@ pub struct Operation {
 #[derive(serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub enum OperationAction { Send, Receive }
-
-#[derive(serde::Serialize, serde::Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct OperationBindings {
-    //TODO: implement operation-binding object https://www.asyncapi.com/docs/reference/specification/v3.0.0#operationBindingsObject
-}
 
 #[derive(serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -79,7 +74,7 @@ pub struct OperationTrait {
     pub external_docs: Option<RefOr<ExternalDocumentation>>,
     /// A map where the keys describe the name of the protocol and the values describe protocol-specific definitions for the operation.
     #[serde(default, skip_serializing_if = "Option::is_none")]
-    pub bindings: Option<RefOr<OperationBindings>>,
+    pub bindings: Option<RefOr<OperationBinding>>,
 }
 
 #[derive(serde::Serialize, serde::Deserialize)]

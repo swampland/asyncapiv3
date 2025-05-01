@@ -1,6 +1,7 @@
 use std::collections::HashMap;
 use crate::spec::common::{ExternalDocumentation, RefOr, Tag};
 use crate::spec::security::SecurityScheme;
+use asyncapi::ServerBinding;
 
 pub type Servers = HashMap<String, RefOr<Server>>;
 
@@ -40,7 +41,7 @@ pub struct Server {
     pub external_docs: Option<RefOr<ExternalDocumentation>>,
     ///	A map where the keys describe the name of the protocol and the values describe protocol-specific definitions for the server.
     #[serde(default, skip_serializing_if = "Option::is_none")]
-    pub bindings: Option<RefOr<ServerBindings>>,
+    pub bindings: Option<RefOr<ServerBinding>>,
 }
 
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -59,10 +60,4 @@ pub struct Variable {
     /// An array of examples of the server variable.
     #[serde(default)]
     pub examples: Vec<String>,
-}
-
-#[derive(serde::Serialize, serde::Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct ServerBindings {
-    //TODO: implement server-binding object https://www.asyncapi.com/docs/reference/specification/v3.0.0#serverBindingsObject
 }

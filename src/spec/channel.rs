@@ -1,6 +1,7 @@
 use std::collections::HashMap;
 use crate::spec::common::{ExternalDocumentation, ReferenceObject, RefOr, Tag};
 use crate::spec::message::Messages;
+use asyncapi::ChannelBinding;
 
 pub type Channels = HashMap<String, RefOr<Channel>>;
 
@@ -35,7 +36,7 @@ pub struct Channel {
     pub external_docs: Option<RefOr<ExternalDocumentation>>,
     /// A map where the keys describe the name of the protocol and the values describe protocol-specific definitions for the channel.
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub bindings: Option<RefOr<ChannelBindings>>,
+    pub bindings: Option<RefOr<ChannelBinding>>,
 }
 
 pub type Parameters = HashMap<String, RefOr<Parameter>>;
@@ -59,10 +60,4 @@ pub struct Parameter {
     /// A runtime expression that specifies the location of the parameter value.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub location: Option<String>,
-}
-
-#[derive(serde::Serialize, serde::Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct ChannelBindings {
-    // TODO: implement based on https://www.asyncapi.com/docs/reference/specification/v3.0.0#channelBindingsObject
 }
